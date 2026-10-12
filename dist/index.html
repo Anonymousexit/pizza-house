@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#bc3426">
+  <meta name="description" content="Pizza House. Wood-fired pizza, good company, and a place to stay a little longer.">
+  <title>Pizza House — Fired up. Good company.</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/pizza.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#story">Skip to content</a>
+  <header class="header" id="header">
+    <a class="small-logo" href="#home" aria-label="Pizza House home">PIZZA<br>HOUSE<span>✳</span></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#story">Our house</a><button data-menu>Pizza & drinks</button><a href="#good-times">Good times</a><a href="#visit">Find us</a>
+    </nav>
+    <div class="header-actions"><button class="button button-small" data-menu>Explore the menu <span>↗</span></button><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" inert>
+    <span class="eyebrow">Make yourself at home</span><a href="#story">Our house <span>01</span></a><button data-menu>Pizza & drinks <span>02</span></button><a href="#good-times">Good times <span>03</span></a><a href="#visit">Find us <span>04</span></a>
+  </nav>
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-photo"><img src="assets/pizza.webp" alt="Fresh wood-fired pizza being sliced straight from the oven" fetchpriority="high" width="2200" height="1228"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">A little char. A lot of soul.</p>
+        <h1 id="hero-title">PIZZA HOUSE<span class="title-star" aria-hidden="true">✳</span></h1>
+        <div class="hero-sub"><span>WOOD-FIRED PIZZA.</span><i>Good company.</i></div>
+      </div>
+      <div class="hero-bottom"><p>Hot from the oven.<br>Right where you belong.</p><a class="scroll-link" href="#story">Take a look around <span>↓</span></a><span class="hero-coordinate">HAND-STRETCHED.<br>FIRE-KISSED.</span></div>
+      <a class="round-badge" href="#pizza"><span>ALL CRUST.<br>NO COMPROMISE.</span><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M11 17 Q30 4 49 17 L30 51Z M14 21 Q30 10 46 21"/><circle cx="26" cy="24" r="3"/><circle cx="35" cy="29" r="3"/><circle cx="28" cy="38" r="2"/></svg></a>
+    </section>
+    <div class="ticker" aria-hidden="true"><div><span>GOOD PIZZA</span><b>✳</b><span>GREAT COMPANY</span><b>✳</b><span>ONE MORE SLICE</span><b>✳</b><span>GOOD PIZZA</span><b>✳</b><span>GREAT COMPANY</span><b>✳</b><span>ONE MORE SLICE</span><b>✳</b></div></div>
+    <section class="story section-pad" id="story">
+      <div class="section-top"><span class="eyebrow">01 / Welcome to the house</span><span class="little-star">✳</span></div>
+      <div class="story-grid">
+        <div class="photo-frame story-image reveal"><img src="assets/interior.webp" alt="Sunlight filling the lively Pizza House dining room" loading="lazy" width="2200" height="1228"><span class="image-caption">Pull up a chair. Stay a little longer.</span></div>
+        <div class="story-copy reveal"><h2>YOUR KIND<br>OF <em>PLACE.</em></h2><p class="lead">Come for the pizza.<br>Stay for everything else.</p><p>The crackle of the oven. The first slice lifted. A table full of your favourite people. Some things just belong together.</p><p>That's the spirit of Pizza House. A neighbourhood hangout with fire in its belly, flour on its hands, and room for one more.</p><a class="text-link" href="#good-times">This is the good life <span>↗</span></a></div>
+      </div>
+    </section>
+    <section class="pizza-section section-pad" id="pizza">
+      <div class="section-top"><span class="eyebrow">02 / From the fire</span><span class="eyebrow">Simple things. Done properly.</span></div>
+      <div class="pizza-heading reveal"><h2>A LITTLE<br><em>ROUGH</em> AROUND<br>THE CRUST.</h2><div class="pizza-aside"><span class="big-star" aria-hidden="true">✳</span><p>Blistered edges. A soft centre.<br>That last bite you'll fight over.</p><button class="button" data-menu>Meet your next favourite <span>↗</span></button></div></div>
+      <div class="triptych reveal"><img src="assets/triptych.webp" alt="A melting margherita slice, a pizza at the wood-fired oven, and drinks at the bar" loading="lazy" width="2200" height="1228"><div class="triptych-labels"><span>THE SLICE.</span><span>THE FIRE.</span><span>THE POUR.</span></div></div>
+      <div class="pizza-foot"><span>Nothing fancy. Just really good pizza.</span><button class="text-link" data-menu>Pizza & drinks <span>↗</span></button></div>
+    </section>
+    <section class="good-times" id="good-times">
+      <div class="friends-photo"><img src="assets/friends.webp" alt="Friends laughing and sharing pizza around a long wooden table" loading="lazy" width="2200" height="1228"></div>
+      <div class="good-times-copy"><span class="eyebrow">03 / Better together</span><h2>LESS SCROLLING.<br><em>MORE SHARING.</em></h2><p>A couple of pizzas. A round of drinks.<br>Absolutely nowhere else to be.</p><a class="button" href="#visit">Bring your people <span>↗</span></a></div>
+      <span class="corner-note">THE BEST THINGS HAPPEN AROUND A TABLE.</span>
+    </section>
+    <section class="visit section-pad" id="visit">
+      <div class="section-top"><span class="eyebrow">04 / Your seat is waiting</span><span class="little-star">✳</span></div>
+      <div class="visit-grid"><div class="visit-copy reveal"><h2>FOLLOW<br>THE <em>FIRE.</em></h2><p>Find the glow in the window.<br>Follow the smell of fresh pizza.<br>Make yourself at home.</p><div class="visit-info"><span class="eyebrow">COME ON OVER</span><p>Our address, opening hours and<br>table bookings are coming soon.</p></div><button class="text-link" data-menu>Get hungry in the meantime <span>↗</span></button></div><div class="photo-frame exterior reveal"><img src="assets/exterior.webp" alt="Pizza House's welcoming storefront glowing at dusk" loading="lazy" width="2200" height="1228"><span class="photo-sticker">See you<br><i>at the house.</i></span></div></div>
+    </section>
+  </main>
+  <footer><div class="footer-top"><span>GOOD FOOD. GOOD PEOPLE. PIZZA HOUSE.</span><a href="#home">Back to the top ↑</a></div><a class="footer-logo" href="#home" aria-label="Pizza House home">PIZZA HOUSE<span>✳</span></a><div class="footer-bottom"><span>© <span id="year">2026</span> Pizza House</span><span>Fired up. Never ordinary.</span><button data-menu>Explore the menu ↗</button></div></footer>
+  <dialog class="menu-dialog" aria-labelledby="menu-title"><div class="menu-wrap"><div class="menu-top"><span class="eyebrow">Pizza House / A taste of the house</span><button class="close-menu" aria-label="Close menu">✕</button></div><h2 id="menu-title">WHAT'S<br><em>COOKING?</em></h2><div class="menu-tabs" role="tablist" aria-label="Menu category"><button role="tab" aria-selected="true" aria-controls="menu-panel" id="tab-pizza" data-category="pizza">Pizza</button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-sides" tabindex="-1" data-category="sides">On the side</button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-drinks" tabindex="-1" data-category="drinks">Drinks</button></div><div id="menu-panel" role="tabpanel" aria-labelledby="tab-pizza" tabindex="0"></div><p class="menu-note">A preview of the flavour. Sample menu — final dishes and prices coming soon. Please ask about allergens before ordering.</p></div></dialog>
+</body>
+</html>
