@@ -8,17 +8,19 @@
   <title>Pizza House — Fired up. Good company.</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/pizza.webp" as="image">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem("pizza-house-theme")==="dark"?"dark":"light"}catch{}</script>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="motion.css">
   <script src="app.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#story">Skip to content</a>
   <header class="header" id="header">
-    <a class="small-logo" href="#home" aria-label="Pizza House home">PIZZA<br>HOUSE<span>✳</span></a>
+    <a class="small-logo" href="#home" aria-label="Pizza House home">PIZZA HOUSE<span>✳</span></a>
     <nav class="desktop-nav" aria-label="Main navigation">
       <a href="#story">Our house</a><button data-menu>Pizza & drinks</button><a href="#good-times">Good times</a><a href="#visit">Find us</a>
     </nav>
-    <div class="header-actions"><button class="button button-small" data-menu>Explore the menu <span>↗</span></button><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>
+    <div class="header-actions"><button class="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode"><span class="theme-orbit" aria-hidden="true"></span></button><button class="button button-small" data-menu>Explore the menu <span>↗</span></button><button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>
   </header>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" inert>
     <span class="eyebrow">Make yourself at home</span><a href="#story">Our house <span>01</span></a><button data-menu>Pizza & drinks <span>02</span></button><a href="#good-times">Good times <span>03</span></a><a href="#visit">Find us <span>04</span></a>
@@ -60,6 +62,19 @@
     </section>
   </main>
   <footer><div class="footer-top"><span>GOOD FOOD. GOOD PEOPLE. PIZZA HOUSE.</span><a href="#home">Back to the top ↑</a></div><a class="footer-logo" href="#home" aria-label="Pizza House home">PIZZA HOUSE<span>✳</span></a><div class="footer-bottom"><span>© <span id="year">2026</span> Pizza House</span><span>Fired up. Never ordinary.</span><button data-menu>Explore the menu ↗</button></div></footer>
-  <dialog class="menu-dialog" aria-labelledby="menu-title"><div class="menu-wrap"><div class="menu-top"><span class="eyebrow">Pizza House / A taste of the house</span><button class="close-menu" aria-label="Close menu">✕</button></div><h2 id="menu-title">WHAT'S<br><em>COOKING?</em></h2><div class="menu-tabs" role="tablist" aria-label="Menu category"><button role="tab" aria-selected="true" aria-controls="menu-panel" id="tab-pizza" data-category="pizza">Pizza</button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-sides" tabindex="-1" data-category="sides">On the side</button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-drinks" tabindex="-1" data-category="drinks">Drinks</button></div><div id="menu-panel" role="tabpanel" aria-labelledby="tab-pizza" tabindex="0"></div><p class="menu-note">A preview of the flavour. Sample menu — final dishes and prices coming soon. Please ask about allergens before ordering.</p></div></dialog>
+  <div class="flying-brand" aria-hidden="true">PIZZA HOUSE<span class="title-star">✳</span></div>
+  <div class="cursor" aria-hidden="true"><span>↗</span></div>
+  <dialog class="menu-dialog" aria-labelledby="menu-title">
+    <div class="menu-wrap">
+      <div class="menu-visual" aria-hidden="true"><div class="menu-photo"></div><div class="menu-visual-shade"></div><span class="eyebrow">Straight from the house</span><div class="menu-visual-title">FRESH<br>FROM<br><em>THE FIRE.</em></div><span class="menu-seal">Made to<br><i>be shared.</i><b>✳</b></span><span class="menu-photo-caption">A little char. A lot of soul.</span></div>
+      <div class="menu-content">
+        <div class="menu-top"><span class="eyebrow">Pizza House / The menu</span><button class="close-menu" aria-label="Close menu"><span aria-hidden="true">✕</span></button></div>
+        <h2 id="menu-title">PICK YOUR <em>pleasure.</em></h2>
+        <div class="menu-tabs" role="tablist" aria-label="Menu category"><button role="tab" aria-selected="true" aria-controls="menu-panel" id="tab-pizza" data-category="pizza">Pizza <sup>04</sup></button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-sides" tabindex="-1" data-category="sides">On the side <sup>03</sup></button><button role="tab" aria-selected="false" aria-controls="menu-panel" id="tab-drinks" tabindex="-1" data-category="drinks">Drinks <sup>03</sup></button></div>
+        <div id="menu-panel" role="tabpanel" aria-labelledby="tab-pizza" tabindex="0"><div class="dish-stage" aria-live="polite"></div><div class="dish-controls"><div class="dish-dots" aria-label="Choose a menu item"></div><div class="dish-arrows"><button class="previous-dish" aria-label="Previous item">←</button><button class="next-dish" aria-label="Next item">→</button></div></div></div>
+        <p class="menu-note">A taste of what's to come. Sample menu — final dishes and prices coming soon. Please ask about allergens before ordering.</p>
+      </div>
+    </div>
+  </dialog>
 </body>
 </html>
