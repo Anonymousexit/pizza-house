@@ -62,6 +62,13 @@ if(!reduceMotion.matches){document.documentElement.classList.add('js-motion');co
 const heroPhoto=document.querySelector('.hero-photo');
 const heroCopy=document.querySelector('.hero-copy');
 const brand=document.querySelector('.flying-brand');
+// Two identical wordmarks share a transform. The second is clipped in viewport
+// space, so only the exact part crossing the header takes its contrasting ink.
+const brandContrast=document.createElement('div');
+brandContrast.className='brand-contrast';brandContrast.setAttribute('aria-hidden','true');
+const headerBrand=brand.cloneNode(true);
+brandContrast.append(headerBrand);brand.after(brandContrast);
+const brandLayers=[brand,headerBrand];
 const originalTitle=document.querySelector('#hero-title');
 const destination=document.querySelector('.small-logo');
 let geometry, progress=0, targetProgress=0, motionFrame=0, lastFrame=0;
@@ -69,10 +76,11 @@ const clamp=(n,min=0,max=1)=>Math.max(min,Math.min(max,n));
 function measureBrand(){
  const original=originalTitle.getBoundingClientRect();
  const target=destination.getBoundingClientRect();
- brand.style.fontSize=getComputedStyle(originalTitle).fontSize;
- brand.style.letterSpacing=getComputedStyle(originalTitle).letterSpacing;
+ const titleStyle=getComputedStyle(originalTitle);
+ brandLayers.forEach(layer=>{layer.style.fontSize=titleStyle.fontSize;layer.style.letterSpacing=titleStyle.letterSpacing;});
+ brandContrast.style.setProperty('--header-edge',`${header.getBoundingClientRect().bottom}px`);
  geometry={startX:original.left+original.width/2,startY:original.top+scrollY+original.height/2,width:original.width,height:original.height,endX:target.left+target.width/2,endY:target.top+target.height/2,scale:Math.min(target.width/original.width,target.height/original.height),distance:document.querySelector('.hero').offsetHeight*.72};
- targetProgress=clamp(scrollY/geometry.distance);progress=targetProgress;paintBrand();brand.classList.add('ready');
+ targetProgress=clamp(scrollY/geometry.distance);progress=targetProgress;paintBrand();brandLayers.forEach(layer=>layer.classList.add('ready'));
 }
 function paintBrand(){
  if(!geometry)return;
@@ -80,7 +88,8 @@ function paintBrand(){
  const x=geometry.startX+(geometry.endX-geometry.startX)*eased;
  const y=geometry.startY+(geometry.endY-geometry.startY)*eased;
  const scale=1+(geometry.scale-1)*eased;
- brand.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) scale(${scale}) rotate(${-2*(1-eased)}deg)`;
+ const transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%) scale(${scale}) rotate(${-2*(1-eased)}deg)`;
+ brandLayers.forEach(layer=>{layer.style.transform=transform;});
  document.body.classList.toggle('brand-docked',p>.94);
  heroCopy.querySelector('.eyebrow').style.opacity=String(1-clamp(p*3));
  heroCopy.querySelector('.hero-sub').style.opacity=String(1-clamp(p*2.4));
@@ -104,26 +113,27 @@ window.addEventListener('scroll',updateScroll,{passive:true});
 window.addEventListener('resize',measureBrand);
 document.fonts.ready.then(()=>{measureBrand();updateScroll();});
 
-// A quiet, spring-following cursor, inspired by Framer's motion interactions.
+// Frame-rate-independent easing: no velocity, overshoot, or spring oscillation.
 const cursor=document.querySelector('.cursor');
 const finePointer=matchMedia('(hover: hover) and (pointer: fine)');
-let pointerX=-100,pointerY=-100,cursorX=-100,cursorY=-100,velocityX=0,velocityY=0,cursorFrame=0,cursorTime=0;
-function springCursor(time){
- const dt=cursorTime?Math.min((time-cursorTime)/16.67,2):1;cursorTime=time;
- velocityX+=(pointerX-cursorX)*.19*dt;velocityY+=(pointerY-cursorY)*.19*dt;
- velocityX*=Math.pow(.66,dt);velocityY*=Math.pow(.66,dt);
- cursorX+=velocityX*dt;cursorY+=velocityY*dt;
+let pointerX=-100,pointerY=-100,cursorX=-100,cursorY=-100,cursorFrame=0,cursorTime=0;
+function smoothCursor(time){
+ const dt=cursorTime?Math.min(time-cursorTime,64):16.67;cursorTime=time;
+ const follow=1-Math.exp(-dt/28);
+ cursorX+=(pointerX-cursorX)*follow;cursorY+=(pointerY-cursorY)*follow;
+ const moving=Math.abs(pointerX-cursorX)+Math.abs(pointerY-cursorY)>.05;
+ if(!moving){cursorX=pointerX;cursorY=pointerY;}
  cursor.style.transform=`translate3d(${cursorX}px,${cursorY}px,0) translate(-50%,-50%)`;
- if(Math.abs(pointerX-cursorX)+Math.abs(pointerY-cursorY)+Math.abs(velocityX)+Math.abs(velocityY)>.08)cursorFrame=requestAnimationFrame(springCursor);else{cursorFrame=0;cursorTime=0;}
+ if(moving)cursorFrame=requestAnimationFrame(smoothCursor);else{cursorFrame=0;cursorTime=0;}
 }
-function hideCursor(){cursor.classList.remove('active');document.documentElement.classList.remove('custom-cursor');}
+function hideCursor(){cancelAnimationFrame(cursorFrame);cursorFrame=0;cursorTime=0;cursor.classList.remove('active','pressed','hovering');document.documentElement.classList.remove('custom-cursor');}
 window.addEventListener('pointermove',e=>{
  if(!finePointer.matches||reduceMotion.matches||e.pointerType==='touch'){hideCursor();return;}
  pointerX=e.clientX;pointerY=e.clientY;
- if(!cursor.classList.contains('active')){cursorX=pointerX;cursorY=pointerY;velocityX=velocityY=0;}
+ if(!cursor.classList.contains('active')){cursorX=pointerX;cursorY=pointerY;cursorTime=0;cursor.style.transform=`translate3d(${cursorX}px,${cursorY}px,0) translate(-50%,-50%)`;}
  cursor.classList.add('active');document.documentElement.classList.add('custom-cursor');
  cursor.classList.toggle('hovering',!!e.target.closest('a,button,[role="tab"]'));
- if(!cursorFrame)cursorFrame=requestAnimationFrame(springCursor);
+ if(!cursorFrame)cursorFrame=requestAnimationFrame(smoothCursor);
 },{passive:true});
 window.addEventListener('pointerdown',()=>cursor.classList.add('pressed'));
 window.addEventListener('pointerup',()=>cursor.classList.remove('pressed'));
@@ -163,8 +173,4 @@ if(!reduceMotion.matches){
   const box=document.querySelector('.good-times').getBoundingClientRect();if(box.bottom>0&&box.top<innerHeight)friends.style.transform=`translateY(${clamp((innerHeight/2-box.top-box.height/2)*.045,-30,30)}px)`;
  }
  window.addEventListener('scroll',()=>{if(!accentFrame)accentFrame=requestAnimationFrame(accentMotion);},{passive:true});accentMotion();
- document.querySelectorAll('.button,.theme-toggle,.dish-arrows button').forEach(button=>{
-  button.addEventListener('pointermove',e=>{if(!finePointer.matches||reduceMotion.matches||e.pointerType==='touch')return;const box=button.getBoundingClientRect();button.style.setProperty('--magnet-x',`${clamp((e.clientX-box.left-box.width/2)*.07,-4,4)}px`);button.style.setProperty('--magnet-y',`${clamp((e.clientY-box.top-box.height/2)*.1,-3,3)}px`);});
-  button.addEventListener('pointerleave',()=>{button.style.setProperty('--magnet-x','0px');button.style.setProperty('--magnet-y','0px');});
- });
 }
